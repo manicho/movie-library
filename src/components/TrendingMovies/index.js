@@ -10,7 +10,7 @@ export default function TrendingMovies({ data }) {
   const navigation = useNavigation();
 
   const handleClick = (item) => {
-    navigation.navigate("MovieDetails", { item });
+    navigation.navigate("Movie", { item });
   };
 
   return (

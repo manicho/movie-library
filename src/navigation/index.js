@@ -1,11 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import { View, Text } from "react-native";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import SearchScreen from "../screens/SearchScreen";
 import SavedScreen from "../screens/SavedScreen";
 import HomeScreen from "../screens/HomeScreen";
+import MovieScreen from "../screens/MovieScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -21,6 +22,7 @@ export default function AppNavigation() {
       >
         <Stack.Screen name="HomeTab" component={HomeTabs} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Movie" component={MovieScreen} />
       </Stack.Navigator>
     );
   }
@@ -28,9 +30,36 @@ export default function AppNavigation() {
   function HomeTabs() {
     return (
       <Tab.Navigator
-        screenOptions={{
+        screenOptions={({ route }) => ({
           headerShown: false,
-        }}
+          tabBarIcon: ({ focused }) => {
+            let iconName;
+
+            if (route.name === "Home") {
+              iconName = "home";
+            } else if (route.name === "Search") {
+              iconName = "search";
+            } else if (route.name === "Saved") {
+              iconName = "heart";
+            }
+
+            const customizeSize = 30;
+
+            return (
+              <Ionicons
+                name={iconName}
+                size={customizeSize}
+                color={focused ? "white" : "gray"}
+              />
+            );
+          },
+          tabBarActiveTintColor: "white",
+          tabBarStyle: {
+            backgroundColor: "#1F1D2B",
+            borderTopWidth: 0,
+            paddingBottom: 10,
+          },
+        })}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Search" component={SearchScreen} />
