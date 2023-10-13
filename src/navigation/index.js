@@ -6,6 +6,7 @@ import SearchScreen from "../screens/SearchScreen";
 import SavedScreen from "../screens/SavedScreen";
 import HomeScreen from "../screens/HomeScreen";
 import MovieScreen from "../screens/MovieScreen";
+import PersonScreen from "../screens/PersonScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
@@ -23,6 +24,7 @@ export default function AppNavigation() {
         <Stack.Screen name="HomeTab" component={HomeTabs} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Movie" component={MovieScreen} />
+        <Stack.Screen name="Person" component={PersonScreen} />
       </Stack.Navigator>
     );
   }

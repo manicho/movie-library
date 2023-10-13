@@ -38,7 +38,7 @@ export default function PopularMovies({ title, data }) {
     );
   };
   return (
-    <View className="space-y-0 mb-4">
+    <View className="space-y-4 mb-4">
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-lg font-bold">{title}</Text>
       </View>

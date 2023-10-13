@@ -7,6 +7,7 @@ const popularMoviesEndpoint = `${apiBaseUrl}/movie/popular?api_key=${movieapikey
 const upComingMoviesEndpoint = `${apiBaseUrl}/movie/upcoming?api_key=${movieapikey}`;
 const topRatedMoviesEndpoint = `${apiBaseUrl}/movie/top_rated?api_key=${movieapikey}`;
 const genresEndpoint = `${apiBaseUrl}/genre/movie/list?api_key=${movieapikey}`;
+const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${movieapikey}`;
 
 // Movie Details Endpoint
 const movieDetailsEndpoint = (id) =>
@@ -68,4 +69,8 @@ export const fetchMovieCredits = (movieId) => {
 
 export const fetchSimilarMovies = (movieId) => {
   return movieApiCall(similarMoviesEndpoint(movieId));
+};
+
+export const searchMovies = (params) => {
+  return movieApiCall(searchMoviesEndpoint, params);
 };

@@ -55,7 +55,6 @@ export default function MovieScreen() {
 
     if (data && data.results) setSimilarMovies(data.results);
   };
-  console.log("similar movies: ", similarMovies);
 
   const formatPopularity = (popularity) => {
     const percentage = (popularity / 1000) * 170;
@@ -75,8 +74,6 @@ export default function MovieScreen() {
       return `${hours}h ${minutes}mins`;
     }
   };
-
-  // console.log("Movie Details: ", movie);
 
   return (
     <ScrollView
@@ -154,7 +151,7 @@ export default function MovieScreen() {
               return (
                 <Text
                   key={index}
-                  className="text-neutral-400 font-semibold text-base text-center"
+                  className="text-neutral-400 font-semibold text-base text-left"
                 >
                   {genre?.name} {showDot ? "• " : null}
                 </Text>
