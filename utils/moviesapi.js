@@ -8,6 +8,16 @@ const upComingMoviesEndpoint = `${apiBaseUrl}/movie/upcoming?api_key=${movieapik
 const topRatedMoviesEndpoint = `${apiBaseUrl}/movie/top_rated?api_key=${movieapikey}`;
 const genresEndpoint = `${apiBaseUrl}/genre/movie/list?api_key=${movieapikey}`;
 
+// Movie Details Endpoint
+const movieDetailsEndpoint = (id) =>
+  `${apiBaseUrl}/movie/${id}?api_key=${movieapikey}`;
+
+const movieCreditsEndpoint = (id) =>
+  `${apiBaseUrl}/movie/${id}/credits?api_key=${movieapikey}`;
+
+const similarMoviesEndpoint = (id) =>
+  `${apiBaseUrl}/movie/${id}/similar?api_key=${movieapikey}`;
+
 const movieApiCall = async (endpoints, params) => {
   const options = {
     method: "GET",
@@ -16,8 +26,8 @@ const movieApiCall = async (endpoints, params) => {
   };
 
   try {
-    const { data } = await axios.request(options);
-    return data;
+    const response = await axios.request(options);
+    return response.data;
   } catch (error) {
     console.log(error);
     return {};
@@ -46,4 +56,16 @@ export const fetchTopRatedMovie = () => {
 
 export const fetchGenres = () => {
   return movieApiCall(genresEndpoint);
+};
+
+export const fetchMovieDetails = (id) => {
+  return movieApiCall(movieDetailsEndpoint(id));
+};
+
+export const fetchMovieCredits = (movieId) => {
+  return movieApiCall(movieCreditsEndpoint(movieId));
+};
+
+export const fetchSimilarMovies = (movieId) => {
+  return movieApiCall(similarMoviesEndpoint(movieId));
 };
