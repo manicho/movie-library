@@ -23,7 +23,11 @@ export default function PopularMovies({ title, data }) {
       >
         <View className="space-y-1 mr-4">
           <Image
-            source={{ uri: image500(item.poster_path) }}
+            source={{
+              uri:
+                image500(item.poster_path) ||
+                "https://media.istockphoto.com/vectors/error-icon-vector-illustration-vector-id922024224?k=6&m=922024224&s=612x612&w=0&h=LXl8Ul7bria6auAXKIjlvb6hRHkAodTqyqBeA6K7R54=",
+            }}
             className="rounded-3xl"
             style={{ width: width * 0.3, height: height * 0.2 }}
           />

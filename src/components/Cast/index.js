@@ -6,7 +6,7 @@ export default function Cast({ cast, navigation }) {
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("Person", { item })}
+        onPress={() => navigation.navigate("Person", item)}
         className="items-start mr-6"
       >
         <View className="items-start justify-start w-full h-[120] rounded-sm overflow-hidden">

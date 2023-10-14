@@ -19,6 +19,12 @@ const movieCreditsEndpoint = (id) =>
 const similarMoviesEndpoint = (id) =>
   `${apiBaseUrl}/movie/${id}/similar?api_key=${movieapikey}`;
 
+const personDetailsEndpoint = (id) =>
+  `${apiBaseUrl}/person/${id}?api_key=${movieapikey}`;
+
+const personMovieEndpoint = (id) =>
+  `${apiBaseUrl}/person/${id}/movie_credits?api_key=${movieapikey}`;
+
 const movieApiCall = async (endpoints, params) => {
   const options = {
     method: "GET",
@@ -73,4 +79,13 @@ export const fetchSimilarMovies = (movieId) => {
 
 export const searchMovies = (params) => {
   return movieApiCall(searchMoviesEndpoint, params);
+};
+
+// Cast functions to fetch data
+export const fetchPersonDetails = (id) => {
+  return movieApiCall(personDetailsEndpoint(id));
+};
+
+export const fetchPersonMovies = (id) => {
+  return movieApiCall(personMovieEndpoint(id));
 };

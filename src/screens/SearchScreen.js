@@ -55,7 +55,7 @@ export default function SearchScreen() {
 
       {/* Search Input */}
 
-      <View className="mx-4 mb-3 mt-8 flex-row p-1 justify-between items-center bg-white rounded-lg">
+      <View className="mx-4 mb-3 mt-12 flex-row p-2 justify-between items-center bg-white rounded-lg">
         <TextInput
           onChangeText={handleTextDebounce}
           placeholder="Search for your favorite movies"
@@ -71,7 +71,13 @@ export default function SearchScreen() {
       {loading ? (
         <Loading />
       ) : results.length > 0 ? (
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingHorizontal: 15,
+          }}
+          className="space-y-6"
+        >
           <Text className="text-white font-semibold ml-1 text-lg mt-2">
             {results.length} Results
           </Text>
@@ -81,12 +87,14 @@ export default function SearchScreen() {
               return (
                 <TouchableWithoutFeedback
                   key={index}
-                  onPress={() => navigation.push("Movie", { item })}
+                  onPress={() => navigation.push("Movie", item)}
                 >
                   <View className="space-y-2 mb-4">
                     <Image
                       source={{
-                        uri: image500(item.poster_path),
+                        uri:
+                          image500(item.poster_path) ||
+                          "https://media.istockphoto.com/vectors/error-icon-vector-illustration-vector-id922024224?k=6&m=922024224&s=612x612&w=0&h=LXl8Ul7bria6auAXKIjlvb6hRHkAodTqyqBeA6K7R54=",
                       }}
                       className="rounded-3xl"
                       style={{

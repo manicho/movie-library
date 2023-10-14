@@ -14,10 +14,12 @@ import {
   fetchSimilarMovies,
   image500,
 } from "../../utils/moviesapi";
-import { ChevronLeftIcon, HeartIcon } from "react-native-heroicons/outline";
+import { ChevronLeftIcon } from "react-native-heroicons/outline";
+import { HeartIcon } from "react-native-heroicons/solid";
 import Loading from "../components/Loading";
 import Cast from "../components/Cast";
 import PopularMovies from "../components/PopularMovies/PopularMovies";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("window");
 
@@ -27,8 +29,8 @@ export default function MovieScreen() {
   const [movie, setMovie] = useState({});
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -75,6 +77,68 @@ export default function MovieScreen() {
     }
   };
 
+  // Save movie
+  const toggleFavoriteAndSave = async () => {
+    try {
+      // Check if the movie is already in storage
+      const savedMovies = await AsyncStorage.getItem("savedMovies");
+      let savedMoviesArray = savedMovies ? JSON.parse(savedMovies) : [];
+      console.log("Check if the movie is already saved");
+
+      // Check if the movie is already in the saved movies list
+      const isMovieSaved = savedMoviesArray.some(
+        (savedMovie) => savedMovie.id === item.id
+      );
+      console.log("Check if the movie is already in the saved movies list");
+
+      if (!isMovieSaved) {
+        savedMoviesArray.push(movie);
+        await AsyncStorage.setItem(
+          "savedMovies",
+          JSON.stringify(savedMoviesArray)
+        );
+        setIsFavorite(true);
+
+        console.log("movie is added to the list of saved movies");
+      } else {
+        // if the movie is already set, remove from the list
+        const updatedSavedMoviesArray = savedMoviesArray.filter(
+          (savedMovie) => savedMovie.id !== item.id
+        );
+        await AsyncStorage.setItem(
+          "savedMovies",
+          JSON.stringify(updatedSavedMoviesArray)
+        );
+        setIsFavorite(false);
+        console.log("movie is removed from the list of saved movies");
+      }
+    } catch (error) {
+      console.log("Error saving movie", error);
+    }
+  };
+
+  useEffect(() => {
+    // load saved movies from AsyncStorage on component mount
+    const loadSavedMovies = async () => {
+      try {
+        const savedMovies = await AsyncStorage.getItem("savedMovies");
+        const savedMoviesArray = savedMovies ? JSON.parse(savedMovies) : [];
+
+        // check if movie is already saved
+        const isMovieSaved = savedMoviesArray.some(
+          (savedMovie) => savedMovie.id === item.id
+        );
+
+        setIsFavorite(isMovieSaved);
+        console.log("check if the current movie is in the saved movies list");
+      } catch (error) {
+        console.log("Error loading saved movies", error);
+      }
+    };
+
+    loadSavedMovies();
+  }, [item.id]);
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -95,8 +159,12 @@ export default function MovieScreen() {
 
           {/* Heart Icon */}
           <View className="bg-[#2496ff] p-2 rounded-full items-center justify-center">
-            <TouchableOpacity>
-              <HeartIcon size={30} strokeWidth={2} color="white" />
+            <TouchableOpacity onPress={toggleFavoriteAndSave}>
+              <HeartIcon
+                size={30}
+                strokeWidth={2}
+                color={isFavorite ? "red" : "white"}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -128,7 +196,7 @@ export default function MovieScreen() {
         }}
       >
         <Image
-          source={require("../../assets/gradient2.jpg")}
+          source={require("../../assets/gradient3.jpg")}
           style={{
             width,
             height,
