@@ -25,14 +25,15 @@ export default function SearchScreen() {
   const handleSearch = (search) => {
     if (search && search.length > 2) {
       setLoading(true);
+
       searchMovies({
         query: search,
         include_adult: false,
         language: "en-US",
         page: "1",
       }).then((data) => {
-        console.log("We got our search results");
         setLoading(false);
+
         if (data && data.results) {
           setResults(data.results);
         }
@@ -54,7 +55,6 @@ export default function SearchScreen() {
       />
 
       {/* Search Input */}
-
       <View className="mx-4 mb-3 mt-12 flex-row p-2 justify-between items-center bg-white rounded-lg">
         <TextInput
           onChangeText={handleTextDebounce}

@@ -83,13 +83,11 @@ export default function MovieScreen() {
       // Check if the movie is already in storage
       const savedMovies = await AsyncStorage.getItem("savedMovies");
       let savedMoviesArray = savedMovies ? JSON.parse(savedMovies) : [];
-      console.log("Check if the movie is already saved");
 
       // Check if the movie is already in the saved movies list
       const isMovieSaved = savedMoviesArray.some(
         (savedMovie) => savedMovie.id === item.id
       );
-      console.log("Check if the movie is already in the saved movies list");
 
       if (!isMovieSaved) {
         savedMoviesArray.push(movie);
@@ -98,8 +96,6 @@ export default function MovieScreen() {
           JSON.stringify(savedMoviesArray)
         );
         setIsFavorite(true);
-
-        console.log("movie is added to the list of saved movies");
       } else {
         // if the movie is already set, remove from the list
         const updatedSavedMoviesArray = savedMoviesArray.filter(
@@ -110,7 +106,6 @@ export default function MovieScreen() {
           JSON.stringify(updatedSavedMoviesArray)
         );
         setIsFavorite(false);
-        console.log("movie is removed from the list of saved movies");
       }
     } catch (error) {
       console.log("Error saving movie", error);
@@ -130,7 +125,6 @@ export default function MovieScreen() {
         );
 
         setIsFavorite(isMovieSaved);
-        console.log("check if the current movie is in the saved movies list");
       } catch (error) {
         console.log("Error loading saved movies", error);
       }

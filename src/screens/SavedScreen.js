@@ -27,7 +27,6 @@ export default function SavedScreen() {
           const savedMoviesArray = savedMovies ? JSON.parse(savedMovies) : [];
 
           setSavedMovies(savedMoviesArray);
-          console.log("pull saved movies from AsyncStorage");
         } catch (error) {
           console.log(error);
         }
@@ -41,7 +40,6 @@ export default function SavedScreen() {
     try {
       await AsyncStorage.removeItem("savedMovies");
       setSavedMovies([]);
-      console.log("clear all saved movies");
     } catch (error) {
       console.log("error cleaning saved movies");
     }
